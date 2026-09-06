@@ -46,14 +46,14 @@ node /你的路径/简派/bin/jianpai.mjs
 
 启动器保留当前工作目录，不会把其他项目的操作切换到简派目录。
 
-项目已预留正式命令入口：`简派` 和 `jianpai`。发布后计划支持：
+项目已提供正式命令入口：`简派` 和 `jianpai`。公开安装：
 
 ```bash
-curl -fsSL https://nodeble.com/jianpai/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Holycrabeth/jianpai/main/scripts/install.sh | bash
 简派
 ```
 
-安装与分发方案见 [安装与分发](docs/install.md)。正式上线前还需要确认域名托管、开源许可和更新策略。
+安装与分发方案见 [安装与分发](docs/install.md)。后续可将 nodeble 域名配置为同路径镜像或跳转。
 
 ## 不影响现有 Pi
 

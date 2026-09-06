@@ -4,7 +4,13 @@
 
 ## 用户安装命令
 
-正式发布到 nodeble 后，计划使用：
+当前公开安装命令：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Holycrabeth/jianpai/main/scripts/install.sh | bash
+```
+
+nodeble 域名恢复后，也可以镜像为：
 
 ```bash
 curl -fsSL https://nodeble.com/jianpai/install.sh | bash
@@ -13,7 +19,7 @@ curl -fsSL https://nodeble.com/jianpai/install.sh | bash
 安装脚本会：
 
 1. 检查 Node.js 版本，要求 22.19 或更新版本。
-2. 下载 `https://nodeble.com/jianpai/jianpai-latest.tar.gz`。
+2. 默认下载 GitHub Release 上的 `jianpai-latest.tar.gz`。
 3. 安装到 `~/.jianpai/versions/<时间戳>/`。
 4. 执行 `npm ci --ignore-scripts` 和 `npm run build`。
 5. 创建命令链接：
@@ -36,16 +42,19 @@ npm run package:release
 dist/jianpai-latest.tar.gz
 ```
 
-需要上传到网站：
+需要上传到 GitHub Release：
 
 ```text
-https://nodeble.com/jianpai/jianpai-latest.tar.gz
+jianpai-latest.tar.gz
 ```
 
-并把安装脚本 `scripts/install.sh` 上传为：
+安装脚本直接使用仓库里的 `scripts/install.sh`。
+
+如果 nodeble 域名恢复，也可以额外上传为：
 
 ```text
 https://nodeble.com/jianpai/install.sh
+https://nodeble.com/jianpai/jianpai-latest.tar.gz
 ```
 
 ## 本地测试安装器

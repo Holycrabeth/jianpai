@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SOURCE_URL="${JIANPAI_SOURCE_URL:-https://nodeble.com/jianpai/jianpai-latest.tar.gz}"
+SOURCE_URL="${JIANPAI_SOURCE_URL:-https://github.com/Holycrabeth/jianpai/releases/latest/download/jianpai-latest.tar.gz}"
 INSTALL_ROOT="${JIANPAI_INSTALL_ROOT:-$HOME/.jianpai}"
 BIN_DIR="${JIANPAI_BIN_DIR:-$HOME/.local/bin}"
 VERSION_NAME="${JIANPAI_VERSION_NAME:-$(date +%Y%m%d%H%M%S)}"
