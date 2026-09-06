@@ -26,6 +26,7 @@ curl -fsSL https://nodeble.com/jianpai/install.sh | bash
    - `~/.local/bin/简派`
    - `~/.local/bin/jianpai`
 6. 如果 `~/.local/bin` 不在 `PATH` 里，自动写入常用 shell 配置，让新开的终端在任意目录都能输入 `简派` 启动。
+7. 在可交互终端里询问是否配置 Telegram 完成通知。用户选择启用后，需要输入自己的 Telegram Chat ID 和 Bot Token；安装器会保存到用户本机 `~/.jianpai/agent/telegram.env`，不会写入项目或发布包。
 
 默认会按当前 shell 写入这些文件之一：zsh 写入 `~/.zshrc` 和 `~/.zprofile`，bash 写入 `~/.bashrc` 和 `~/.bash_profile`，其他 shell 写入 `~/.profile`。如果不想让安装器修改 shell 配置，可以这样安装：
 
@@ -34,6 +35,14 @@ curl -fsSL https://raw.githubusercontent.com/Holycrabeth/jianpai/main/scripts/in
 ```
 
 这种情况下需要手动把 `~/.local/bin` 加入 `PATH`。
+
+如果不想在安装时询问 Telegram 通知，可以这样跳过：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Holycrabeth/jianpai/main/scripts/install.sh | JIANPAI_CONFIGURE_TELEGRAM=0 bash
+```
+
+如果想在自动化脚本里强制进入 Telegram 配置流程，可以设置 `JIANPAI_CONFIGURE_TELEGRAM=1`；但这仍需要可交互终端来输入 Chat ID 和 Bot Token。
 
 ## 发布准备
 

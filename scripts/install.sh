@@ -33,6 +33,49 @@ append_path_to_file() {
   info "已写入 PATH 配置：$profile_file"
 }
 
+escape_double_quoted() {
+  local value="$1"
+  value="${value//\\/\\\\}"
+  value="${value//\"/\\\"}"
+  printf '%s' "$value"
+}
+
+append_source_to_file() {
+  local profile_file="$1"
+  local source_file="$2"
+  local marker='# 简派 Telegram 完成通知'
+  local escaped
+  escaped="$(escape_double_quoted "$source_file")"
+  mkdir -p "$(dirname "$profile_file")"
+  touch "$profile_file"
+  if grep -Fq "$source_file" "$profile_file"; then
+    return 0
+  fi
+  {
+    printf '\n%s\n' "$marker"
+    printf '[ -f "%s" ] && source "%s"\n' "$escaped" "$escaped"
+  } >> "$profile_file"
+  info "已写入 Telegram 通知配置加载项：$profile_file"
+}
+
+for_shell_profiles() {
+  local callback="$1"
+  shift
+  case "${SHELL:-}" in
+    */zsh)
+      "$callback" "$HOME/.zshrc" "$@"
+      "$callback" "$HOME/.zprofile" "$@"
+      ;;
+    */bash)
+      "$callback" "$HOME/.bashrc" "$@"
+      "$callback" "$HOME/.bash_profile" "$@"
+      ;;
+    *)
+      "$callback" "$HOME/.profile" "$@"
+      ;;
+  esac
+}
+
 ensure_command_on_path() {
   case ":$PATH:" in
     *":$BIN_DIR:"*) return 0 ;;
@@ -43,21 +86,55 @@ ensure_command_on_path() {
     return 0
   fi
 
-  case "${SHELL:-}" in
-    */zsh)
-      append_path_to_file "$HOME/.zshrc"
-      append_path_to_file "$HOME/.zprofile"
-      ;;
-    */bash)
-      append_path_to_file "$HOME/.bashrc"
-      append_path_to_file "$HOME/.bash_profile"
-      ;;
-    *)
-      append_path_to_file "$HOME/.profile"
-      ;;
-  esac
+  for_shell_profiles append_path_to_file
   info '新开的终端窗口可直接输入：简派'
   info "当前终端如需立刻使用，请先运行：$(path_entry_line)"
+}
+
+configure_telegram_notifications() {
+  if [ "${JIANPAI_CONFIGURE_TELEGRAM:-}" = "0" ]; then
+    return 0
+  fi
+
+  local enable="${JIANPAI_CONFIGURE_TELEGRAM:-}"
+  if [ -z "$enable" ]; then
+    if [ ! -r /dev/tty ] || [ ! -w /dev/tty ]; then
+      info '未检测到可交互终端，跳过 Telegram 完成通知配置。以后可按 docs/telegram.md 手动配置。'
+      return 0
+    fi
+    printf '\n为了确保您知道模型是否完工，建议添加 Telegram 通知机器人，方便您随时了解模型工作完成与否。\n' > /dev/tty
+    printf '是否现在配置 Telegram 完成通知？[y/N] ' > /dev/tty
+    read -r enable < /dev/tty || enable=""
+  fi
+
+  case "$enable" in
+    y|Y|yes|YES|1|true|TRUE) ;;
+    *)
+      info '已跳过 Telegram 完成通知配置。'
+      return 0
+      ;;
+  esac
+
+  [ -r /dev/tty ] || fail '当前没有可交互终端，无法读取 Telegram 配置。'
+  local chat_id bot_token env_file
+  printf '请输入 Telegram Chat ID：' > /dev/tty
+  read -r chat_id < /dev/tty || chat_id=""
+  printf '请输入 Telegram Bot Token：' > /dev/tty
+  read -r bot_token < /dev/tty || bot_token=""
+  [ -n "$chat_id" ] || fail 'Telegram Chat ID 不能为空。'
+  [ -n "$bot_token" ] || fail 'Telegram Bot Token 不能为空。'
+
+  env_file="$INSTALL_ROOT/agent/telegram.env"
+  mkdir -p "$(dirname "$env_file")"
+  umask 077
+  cat > "$env_file" <<EOF
+export JIANPAI_TELEGRAM_CHAT_ID="$(escape_double_quoted "$chat_id")"
+export JIANPAI_TELEGRAM_BOT_TOKEN="$(escape_double_quoted "$bot_token")"
+EOF
+  chmod 600 "$env_file"
+  for_shell_profiles append_source_to_file "$env_file"
+  info "Telegram 完成通知已配置：$env_file"
+  info '新开的终端启动简派后，agent 干完会发送 Telegram 提醒。'
 }
 
 if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
@@ -137,4 +214,5 @@ done
 info '安装完成。'
 info "命令已放到：$BIN_DIR/简派 和 $BIN_DIR/jianpai"
 ensure_command_on_path
+configure_telegram_notifications
 info '现在可以输入：简派'

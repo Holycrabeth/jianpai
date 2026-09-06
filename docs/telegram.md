@@ -18,7 +18,16 @@ Pi 有两个相近事件：
 - Bot Token
 - Chat ID
 
-然后在 shell 配置里加入：
+安装器会在可交互终端里询问是否配置：
+
+```text
+为了确保您知道模型是否完工，建议添加 Telegram 通知机器人，方便您随时了解模型工作完成与否。
+是否现在配置 Telegram 完成通知？[y/N]
+```
+
+选择 `y` 后，输入自己的 Chat ID 和 Bot Token 即可。配置会保存到用户本机 `~/.jianpai/agent/telegram.env`，不会写进简派源码或发布包。
+
+也可以手动在 shell 配置里加入：
 
 ```bash
 export JIANPAI_TELEGRAM_BOT_TOKEN="你的 bot token"

@@ -57,7 +57,7 @@ curl -fsSL https://raw.githubusercontent.com/Holycrabeth/jianpai/main/scripts/in
 
 ## Telegram 完成通知
 
-如果想让简派每次干完活后发 Telegram 消息，先设置环境变量：
+如果想让简派每次干完活后发 Telegram 消息，安装器会询问是否配置；每个用户需要填写自己的 Telegram Chat ID 和 Bot Token。也可以手动设置环境变量：
 
 ```bash
 export JIANPAI_TELEGRAM_BOT_TOKEN="你的 bot token"
@@ -65,7 +65,7 @@ export JIANPAI_TELEGRAM_CHAT_ID="你的 chat id"
 简派
 ```
 
-简派会在 agent 真正空闲时发送“简派干完了”，包含当前目录、任务摘要和大致耗时。没有设置这两个变量时不会发送，也不会联网。临时关闭：
+简派会在 agent 真正空闲时发送“简派干完了”，包含当前目录、任务摘要和大致耗时。发布包不包含任何个人 Telegram 凭据；没有设置这两个变量时不会发送，也不会联网。临时关闭：
 
 ```bash
 JIANPAI_TELEGRAM_NOTIFY=0 简派

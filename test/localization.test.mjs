@@ -200,6 +200,9 @@ test('安装分发入口：保留英文命令并提供中文命令，安装脚�
   assert.ok(installScript.includes('ensure_command_on_path'));
   assert.ok(installScript.includes('$HOME/.local/bin'));
   assert.ok(installScript.includes('JIANPAI_UPDATE_SHELL'));
+  assert.ok(installScript.includes('configure_telegram_notifications'));
+  assert.ok(installScript.includes('为了确保您知道模型是否完工'));
+  assert.ok(installScript.includes('JIANPAI_CONFIGURE_TELEGRAM'));
 });
 
 test('Telegram 完成通知：启动器默认加载内置 agent_settled 扩展，密钥只走环境变量', async () => {
