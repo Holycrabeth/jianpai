@@ -15,6 +15,7 @@ const args = [
   '--exclude', './build',
   '--exclude', './node_modules',
   '--exclude', './dist',
+  '--exclude', './.local',
   '--exclude', './.DS_Store',
   '--exclude', './*.log',
   '-C', root,
