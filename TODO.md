@@ -23,7 +23,11 @@
 - [x] 本次已在当前电脑创建 `~/.local/bin/简派` / `~/.local/bin/jianpai` 全局包装命令；`command -v 简派` 指向 `~/.local/bin/简派`，`简派 --version` 输出 `0.85.0`。
 - [x] 本次新增全局命令安装逻辑后执行 `bash -n scripts/install.sh && npm test`：18 项全部通过。
 - [ ] 本次尝试 `npm run check` 失败：现有 `build/pi` 中 `dist/config.js` 过期；当前会话不重建正在使用的构建目录，需退出后在普通终端执行 `npm run build && npm run check && npm test`。
-- [ ] 退出当前简派后，重新打包发布并用公开安装命令验证新安装器会自动配置 PATH。
+- [x] 发布简派 `0.1.1`：已提交 `Release 0.1.1`，推送 `main` 和 tag `v0.1.1`，GitHub Release 已上传 `dist/jianpai-latest.tar.gz`。
+- [x] 本机公开安装升级到 `0.1.1`：`~/.jianpai/current/package.json` 为 `0.1.1`，`简派 --version` 输出 `0.85.0`。
+- [x] mac mini 公开安装升级到 `0.1.1`：`~/.jianpai/current/package.json` 为 `0.1.1`，`简派 --version` 输出 `0.85.0`。
+- [x] 本机与 mac mini 均已配置 Telegram 完成通知密钥文件 `~/.jianpai/agent/telegram.env`，权限 `600`；均已用 Telegram API 发送测试消息成功。
+- [x] 退出当前简派后，重新打包发布并用公开安装命令验证新安装器会自动配置 PATH。
 - [x] 按用户要求新增 Telegram 完成通知初版：内置 `extensions/telegram-done.ts`，启动器自动以 `--extension` 加载；配置 `JIANPAI_TELEGRAM_BOT_TOKEN` 和 `JIANPAI_TELEGRAM_CHAT_ID` 后，在 `agent_settled` 发送“简派干完了”。
 - [x] 新增 `docs/telegram.md`，说明配置、关闭、隐私边界和为什么使用 `agent_settled`。
 - [x] 本次执行 `npm test`：19 项全部通过；执行 `简派 --version` 输出 `0.85.0`，启动器默认加载扩展后基础命令正常。
