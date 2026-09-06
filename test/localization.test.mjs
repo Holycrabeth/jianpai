@@ -229,7 +229,8 @@ test('独立启动器：中文帮助、原有选项、版本，可从其他目�
     assert.ok(help.stdout.includes('用法：'));
     assert.ok(help.stdout.includes('--exclude-tools'));
     assert.ok(help.stdout.includes('撰写文件'));
-    assert.equal(run(['--version']).stdout.trim(), '0.85.0');
+    const pkg = JSON.parse(await readFile(join(process.cwd(), 'package.json'), 'utf8'));
+    assert.equal(run(['--version']).stdout.trim(), pkg.version);
     const invalid = run(['--not-a-real-option']);
     assert.notEqual(invalid.status, 0);
     assert.ok(invalid.stderr.includes('未知选项'));

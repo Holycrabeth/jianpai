@@ -27,6 +27,8 @@ Pi 有两个相近事件：
 
 选择 `y` 后，输入自己的 Chat ID 和 Bot Token 即可。配置会保存到用户本机 `~/.jianpai/agent/telegram.env`，不会写进简派源码或发布包。
 
+从 `0.1.2` 起，启动器直接读取这个文件，不再依赖 shell 配置是否生效。自定义 `JIANPAI_CODING_AGENT_DIR` 时，只读取该目录下的 `telegram.env`。显式环境变量（包括下方通用别名）优先于文件；文件仅按数据解析，不执行其中的 shell 命令，也不导入无关变量。读取失败会在终端提示，但不阻止简派启动。
+
 也可以手动在 shell 配置里加入：
 
 ```bash
@@ -47,6 +49,12 @@ JIANPAI_TELEGRAM_BOT_TOKEN="你的 bot token" \
 JIANPAI_TELEGRAM_CHAT_ID="你的 chat id" \
 简派
 ```
+
+## 没收到通知时
+
+- `0.1.1` 只读取环境变量：即使安装器已保存文件，旧终端 / 未加载 shell 配置的启动环境仍可能静默跳过通知。升级 `0.1.2` 并退出重启后才会使用新的读取逻辑，`/reload` 不能重新运行启动器。
+- 检查是否设置了 `JIANPAI_TELEGRAM_NOTIFY=0`，以及当前配置目录是否包含自己的 `telegram.env`。
+- Telegram 发送失败时界面会提示；本地模拟测试通过不代表真实网络或机器人权限已验证。
 
 ## 关闭
 

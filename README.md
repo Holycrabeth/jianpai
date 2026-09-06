@@ -28,6 +28,8 @@ npm run build
 npm start
 ```
 
+启动标题和 `简派 --version` 显示简派自身版本（来自 `package.json`），不是 Pi 底座的 `0.85.0`。源码修改后需重新构建并重启；已安装版本需安装包含修复的新发布包。
+
 进入后使用 `/login` 登录模型服务商，再使用 `/model` 选择模型。登录菜单、设置和操作提示已中文化；命令本身仍保留英文，兼容 Pi 原有操作习惯。
 
 **现在这台电脑已经安装依赖并完成构建，可以直接 `npm start`。**
@@ -57,7 +59,7 @@ curl -fsSL https://raw.githubusercontent.com/Holycrabeth/jianpai/main/scripts/in
 
 ## Telegram 完成通知
 
-如果想让简派每次干完活后发 Telegram 消息，安装器会询问是否配置；每个用户需要填写自己的 Telegram Chat ID 和 Bot Token。也可以手动设置环境变量：
+如果想让简派每次干完活后发 Telegram 消息，安装器会询问是否配置；每个用户需要填写自己的 Telegram Chat ID 和 Bot Token。`0.1.2` 起启动器直接读取用户配置目录的 `telegram.env`，无需依赖 shell 的 `source`；升级后需退出重启。也可以手动设置环境变量：
 
 ```bash
 export JIANPAI_TELEGRAM_BOT_TOKEN="你的 bot token"

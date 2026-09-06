@@ -2,6 +2,7 @@
 import { existsSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 import { writeMergedModels } from '../scripts/merge-models.mjs';
+import { loadTelegramEnvironment } from '../scripts/telegram-config.mjs';
 import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -29,10 +30,19 @@ if (process.env.JIANPAI_TELEGRAM_NOTIFY !== '0' && existsSync(telegramDoneExtens
   extraArgs.push('--extension', telegramDoneExtension);
 }
 
+let notificationEnv;
+try {
+  notificationEnv = await loadTelegramEnvironment(agentDir);
+} catch (error) {
+  console.error(error.message);
+  // A notification configuration failure must not prevent normal use of the agent.
+  notificationEnv = process.env;
+}
+
 const child = spawn(process.execPath, [entry, ...extraArgs, ...process.argv.slice(2)], {
   stdio: 'inherit',
   env: {
-    ...process.env,
+    ...notificationEnv,
     JIANPAI_CODING_AGENT_DIR: agentDir,
     JIANPAI_MODELS_PATH: mergedModelsPath,
     PI_PACKAGE_DIR: join(root, 'build/pi'),

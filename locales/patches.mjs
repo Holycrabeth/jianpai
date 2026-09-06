@@ -1,5 +1,9 @@
 // Small, anchored display adaptations not expressible as literal translations.
 // Applied BEFORE catalog translations. Never modify tool execution modules.
+import { readFileSync } from 'node:fs';
+
+// Bake the product version into display sites only; keep Pi's internal VERSION intact.
+const { version: jianpaiVersion } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
 const C = 'dist/modes/interactive/components/';
 const R = 'dist/core/tools/renderers/';
 const T = 'node_modules/@earendil-works/pi-tui/dist/components/';
@@ -12,7 +16,11 @@ export const patches = {
     { from: 'Default thinking level: ${level}', to: 'Default thinking level: ${zhThinking(level)}' },
     { from: 'TUI mode: ${mode}', to: 'TUI mode: ${zhSettingValue("tui-mode", mode)}' },
     { from: 'theme.fg("accent", APP_NAME)) + theme.fg("dim",', to: 'theme.fg("accent", "简派 Jianpai")) + theme.fg("dim",' },
+    { from: '` v${this.version}`', to: JSON.stringify(` v${jianpaiVersion}`) },
     { from: '${selection.trusted ? "trusted" : "untrusted"}', to: '${selection.trusted ? "已信任" : "未信任"}' },
+  ],
+  'dist/main.js': [
+    { from: 'console.log(VERSION);', to: `console.log(${JSON.stringify(jianpaiVersion)});` },
   ],
   'dist/cli/args.js': [
     { from: '${ENV_AGENT_DIR.padEnd(32)} - Config directory (default: ~/${CONFIG_DIR_NAME}/agent)', to: '${ENV_AGENT_DIR.padEnd(32)} - 简派配置目录（启动器默认：~/.jianpai/agent）' },

@@ -46,6 +46,7 @@ dist/jianpai-latest.tar.gz
 
 ```bash
 tmp="$(mktemp -d)"
+JIANPAI_UPDATE_SHELL=0 JIANPAI_CONFIGURE_TELEGRAM=0 \
 JIANPAI_INSTALL_ROOT="$tmp/home/.jianpai" \
 JIANPAI_BIN_DIR="$tmp/bin" \
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Holycrabeth/jianpai/main/scripts/install.sh)"
@@ -53,12 +54,14 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/Holycrabeth/jianpai/main
 "$tmp/bin/jianpai" --version
 ```
 
-期望输出：
+期望输出为本次发布的简派版本（与 `package.json` 一致），例如 `0.1.2`：
 
 ```text
-0.85.0
-0.85.0
+0.1.2
+0.1.2
 ```
+
+启动标题同样显示简派版本；Pi 底座内部版本仍为 `0.85.0`。
 
 ## 目前状态
 
