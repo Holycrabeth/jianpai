@@ -14,9 +14,21 @@ https://nodeble.com/jianpai/install.sh
 https://nodeble.com/jianpai/jianpai-latest.tar.gz
 ```
 
+## 版本策略
+
+当前底座固定 Pi `0.85.0`。除非有重要 bug、安全修复或协议兼容问题，不为了追模型列表升级 Pi。
+
+常规发布使用简派自己的版本：
+
+- `0.1.1`、`0.1.2`：新增模型、修正文案、安装脚本修补。
+- `0.2.0`：较明显的新体验或兼容性增强。
+
+新增模型应优先通过简派补丁版本发布，让用户重跑安装脚本即可更新。
+
 ## 本地发布文件
 
 ```bash
+npm version patch --no-git-tag-version
 npm test
 npm run check
 npm run package:release

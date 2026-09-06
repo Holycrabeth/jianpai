@@ -196,6 +196,21 @@ test('安装分发入口：保留英文命令并提供中文命令，安装脚�
   assert.equal(lock.packages[''].bin.jianpai, 'bin/jianpai.mjs');
   assert.equal(lock.packages[''].bin['简派'], 'bin/jianpai.mjs');
   assert.equal(spawnSync('bash', ['-n', 'scripts/install.sh']).status, 0);
+  const installScript = await readFile('scripts/install.sh', 'utf8');
+  assert.ok(installScript.includes('ensure_command_on_path'));
+  assert.ok(installScript.includes('$HOME/.local/bin'));
+  assert.ok(installScript.includes('JIANPAI_UPDATE_SHELL'));
+});
+
+test('Telegram 完成通知：启动器默认加载内置 agent_settled 扩展，密钥只走环境变量', async () => {
+  const launcher = await readFile('bin/jianpai.mjs', 'utf8');
+  assert.ok(launcher.includes('extensions/telegram-done.ts'));
+  assert.ok(launcher.includes('--extension'));
+  const extension = await readFile('extensions/telegram-done.ts', 'utf8');
+  assert.ok(extension.includes('agent_settled'));
+  assert.ok(extension.includes('JIANPAI_TELEGRAM_BOT_TOKEN'));
+  assert.ok(extension.includes('JIANPAI_TELEGRAM_CHAT_ID'));
+  assert.ok(!extension.includes('bot123'));
 });
 
 test('独立启动器：中文帮助、原有选项、版本，可从其他目录启动', async () => {

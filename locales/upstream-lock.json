@@ -63,6 +63,7 @@
     "dist/modes/interactive/theme/theme-controller.js": "405816575454b9af87344ed2fe9687c6085f551cc8b5175e06175a5d3e985dc9",
     "dist/modes/interactive/theme/theme-json.js": "6b762159b44184f5c4d735e233756be000e38d5a79791d2df4eb49cd2c7321cc",
     "dist/modes/interactive/theme/theme.js": "5ced0adb09ca8ce0f9b4eefcf89825755e9873cd53388825694025a4b046d1d5",
-    "dist/modes/interactive/interactive-mode.js": "802ff14f5a47710e5a46d8141b238c4d5ffca30e8ca26bad18f838eddbf086bf"
+    "dist/modes/interactive/interactive-mode.js": "802ff14f5a47710e5a46d8141b238c4d5ffca30e8ca26bad18f838eddbf086bf",
+    "dist/config.js": "53098afc9f4bfa2a3720e6971561291b3850e78e9a22e482ffb4584bd4f123f8"
   }
 }

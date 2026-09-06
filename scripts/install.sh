@@ -12,6 +12,54 @@ info() { printf '简派安装器：%s\n' "$*"; }
 fail() { printf '简派安装器：%s\n' "$*" >&2; exit 1; }
 need() { command -v "$1" >/dev/null 2>&1 || fail "缺少命令：$1"; }
 
+path_entry_line() {
+  printf 'export PATH="%s:$PATH"' "$BIN_DIR"
+}
+
+append_path_to_file() {
+  local profile_file="$1"
+  local marker='# 简派命令：让任意目录都能输入「简派」启动'
+  local line
+  line="$(path_entry_line)"
+  mkdir -p "$(dirname "$profile_file")"
+  touch "$profile_file"
+  if grep -Fq "$BIN_DIR" "$profile_file"; then
+    return 0
+  fi
+  {
+    printf '\n%s\n' "$marker"
+    printf '%s\n' "$line"
+  } >> "$profile_file"
+  info "已写入 PATH 配置：$profile_file"
+}
+
+ensure_command_on_path() {
+  case ":$PATH:" in
+    *":$BIN_DIR:"*) return 0 ;;
+  esac
+
+  if [ "${JIANPAI_UPDATE_SHELL:-1}" = "0" ]; then
+    info "注意：$BIN_DIR 还不在 PATH 里。请手动加入：$(path_entry_line)"
+    return 0
+  fi
+
+  case "${SHELL:-}" in
+    */zsh)
+      append_path_to_file "$HOME/.zshrc"
+      append_path_to_file "$HOME/.zprofile"
+      ;;
+    */bash)
+      append_path_to_file "$HOME/.bashrc"
+      append_path_to_file "$HOME/.bash_profile"
+      ;;
+    *)
+      append_path_to_file "$HOME/.profile"
+      ;;
+  esac
+  info '新开的终端窗口可直接输入：简派'
+  info "当前终端如需立刻使用，请先运行：$(path_entry_line)"
+}
+
 if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
   for candidate in /opt/homebrew/bin /usr/local/bin; do
     if [ -x "$candidate/node" ] || [ -x "$candidate/npm" ]; then
@@ -88,11 +136,5 @@ done
 
 info '安装完成。'
 info "命令已放到：$BIN_DIR/简派 和 $BIN_DIR/jianpai"
-case ":$PATH:" in
-  *":$BIN_DIR:"*) ;;
-  *)
-    info "注意：$BIN_DIR 还不在 PATH 里。请把下面这一行加入 ~/.zshrc 或 ~/.bashrc："
-    printf 'export PATH="%s:$PATH"\n' "$BIN_DIR"
-    ;;
-esac
+ensure_command_on_path
 info '现在可以输入：简派'

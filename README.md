@@ -53,7 +53,23 @@ curl -fsSL https://raw.githubusercontent.com/Holycrabeth/jianpai/main/scripts/in
 简派
 ```
 
-安装与分发方案见 [安装与分发](docs/install.md)。后续可将 nodeble 域名配置为同路径镜像或跳转。
+安装器会把命令放到 `~/.local/bin`，并在需要时写入 shell 配置；新开的终端可在任意项目目录直接输入 `简派` 启动。安装与分发方案见 [安装与分发](docs/install.md)。后续可将 nodeble 域名配置为同路径镜像或跳转。
+
+## Telegram 完成通知
+
+如果想让简派每次干完活后发 Telegram 消息，先设置环境变量：
+
+```bash
+export JIANPAI_TELEGRAM_BOT_TOKEN="你的 bot token"
+export JIANPAI_TELEGRAM_CHAT_ID="你的 chat id"
+简派
+```
+
+简派会在 agent 真正空闲时发送“简派干完了”，包含当前目录、任务摘要和大致耗时。没有设置这两个变量时不会发送，也不会联网。临时关闭：
+
+```bash
+JIANPAI_TELEGRAM_NOTIFY=0 简派
+```
 
 ## 不影响现有 Pi
 
@@ -94,6 +110,6 @@ npm run package:release # 生成可上传到网站的源码安装包
 
 ## 文档与许可
 
-[汉化范围与验证](docs/localization.md) · [产品需求](docs/product.md) · [技术方案](docs/architecture.md) · [后续清单](TODO.md)
+[汉化范围与验证](docs/localization.md) · [模型更新机制](docs/models.md) · [Telegram 完成通知](docs/telegram.md) · [产品需求](docs/product.md) · [技术方案](docs/architecture.md) · [后续清单](TODO.md)
 
 简派是独立项目，不是 Pi 官方中文版本。简派自身使用 MIT 许可证，见 [LICENSE](LICENSE)。Pi 上游使用 MIT 许可证，版权声明保留于 [THIRD_PARTY_LICENSES/Pi-MIT.txt](THIRD_PARTY_LICENSES/Pi-MIT.txt)。

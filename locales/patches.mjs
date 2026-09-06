@@ -17,6 +17,9 @@ export const patches = {
   'dist/cli/args.js': [
     { from: '${ENV_AGENT_DIR.padEnd(32)} - Config directory (default: ~/${CONFIG_DIR_NAME}/agent)', to: '${ENV_AGENT_DIR.padEnd(32)} - 简派配置目录（启动器默认：~/.jianpai/agent）' },
   ],
+  'dist/config.js': [
+    { from: 'export function getModelsPath() {\n    return join(getAgentDir(), "models.json");\n}', to: 'export function getModelsPath() {\n    return process.env.JIANPAI_MODELS_PATH || join(getAgentDir(), "models.json");\n}' },
+  ],
   [R + 'bash.js']: [
     { from: 'import { Container,', to: 'import { zhShellCommand } from "../../../jianpai-locale.js";\nimport { Container,' },
     { from: 'command ? command : theme.fg', to: 'command ? (prompt === "$" ? zhShellCommand(command) : command) : theme.fg' },

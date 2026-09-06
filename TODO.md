@@ -18,7 +18,23 @@
 - [x] 创建公开 GitHub 仓库：`https://github.com/Holycrabeth/jianpai`。
 - [x] 发布 GitHub Release `v0.1.0`，上传 `dist/jianpai-latest.tar.gz`。
 - [x] 真实公开 URL 端到端验证通过：本机和 macmini 均可通过 `curl -fsSL https://raw.githubusercontent.com/Holycrabeth/jianpai/main/scripts/install.sh | bash` 隔离安装，`简派 --version` / `jianpai --version` 输出 `0.85.0`。
+- [x] Linux 实机隔离安装验证通过：在 Vultr Ubuntu 25.10 x86_64 上用临时 Node.js 22.22.0、临时安装目录和公开安装脚本安装成功，`简派 --version` / `jianpai --version` 输出 `0.85.0`；未改系统 Node 或全局目录。
+- [x] 按用户要求实现“全电脑任意目录输入 `简派` 启动”：安装器在创建 `~/.local/bin/简派` / `jianpai` 后，自动把命令目录写入 zsh / bash / profile 配置；可用 `JIANPAI_UPDATE_SHELL=0` 禁用。
+- [x] 本次已在当前电脑创建 `~/.local/bin/简派` / `~/.local/bin/jianpai` 全局包装命令；`command -v 简派` 指向 `~/.local/bin/简派`，`简派 --version` 输出 `0.85.0`。
+- [x] 本次新增全局命令安装逻辑后执行 `bash -n scripts/install.sh && npm test`：18 项全部通过。
+- [ ] 本次尝试 `npm run check` 失败：现有 `build/pi` 中 `dist/config.js` 过期；当前会话不重建正在使用的构建目录，需退出后在普通终端执行 `npm run build && npm run check && npm test`。
+- [ ] 退出当前简派后，重新打包发布并用公开安装命令验证新安装器会自动配置 PATH。
+- [x] 按用户要求新增 Telegram 完成通知初版：内置 `extensions/telegram-done.ts`，启动器自动以 `--extension` 加载；配置 `JIANPAI_TELEGRAM_BOT_TOKEN` 和 `JIANPAI_TELEGRAM_CHAT_ID` 后，在 `agent_settled` 发送“简派干完了”。
+- [x] 新增 `docs/telegram.md`，说明配置、关闭、隐私边界和为什么使用 `agent_settled`。
+- [x] 本次执行 `npm test`：19 项全部通过；执行 `简派 --version` 输出 `0.85.0`，启动器默认加载扩展后基础命令正常。
+- [ ] Telegram 完成通知尚未真实端到端发送验证；需要用户提供 Bot Token / Chat ID，或在临时 bot 上验证。
 - [ ] `nodeble.com` 当前解析到 `213.249.67.10`，但 HTTP/HTTPS/SSH 探测不可用；后续恢复域名或配置跳转到 GitHub 安装脚本。
+- [x] 建立简派自己的模型更新机制：固定 Pi `0.85.0` 稳定底座，新增模型 / 汉化修补通过 `0.1.1`、`0.1.2` 等简派补丁版本发布，不为模型列表频繁升级 Pi。
+- [x] 设计并实现简派内置模型增量目录：`models/jianpai.models.json`，启动器生成 `~/.jianpai/agent/generated/jianpai-models.json`，再通过 `JIANPAI_MODELS_PATH` 交给构建后的 Pi 读取。
+- [x] 保留用户 `~/.jianpai/agent/models.json` 自定义覆盖能力：合并顺序为简派内置在前、用户配置在后，同 provider / 同模型 `id` 用户优先。
+- [x] 新增 `scripts/merge-models.mjs` 和 `test/model-merge.test.mjs`；本次 `npm test` 18 项全部通过。
+- [x] 本次执行内存编译和指纹验证：新增 `dist/config.js` 补丁可套用，包含 `JIANPAI_MODELS_PATH`。
+- [ ] 当前会话正在使用 `/Users/holycrab/简派/build/pi`，本次未执行 `npm run build` / `npm run check`，需退出后在普通终端执行完整构建验证。
 
 ### 上次：命令括号说明与交接整理
 

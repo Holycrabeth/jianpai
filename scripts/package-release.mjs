@@ -20,7 +20,7 @@ const args = [
   '-C', root,
   '.',
 ];
-const result = spawnSync('tar', args, { stdio: 'inherit' });
+const result = spawnSync('tar', args, { stdio: 'inherit', env: { ...process.env, COPYFILE_DISABLE: '1' } });
 if (result.status !== 0) process.exit(result.status ?? 1);
 console.log(`已生成：${outFile}`);
 console.log('可上传到 GitHub Release，下载地址将是：');

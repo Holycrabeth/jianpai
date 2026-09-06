@@ -25,8 +25,15 @@ curl -fsSL https://nodeble.com/jianpai/install.sh | bash
 5. 创建命令链接：
    - `~/.local/bin/简派`
    - `~/.local/bin/jianpai`
+6. 如果 `~/.local/bin` 不在 `PATH` 里，自动写入常用 shell 配置，让新开的终端在任意目录都能输入 `简派` 启动。
 
-如果 `~/.local/bin` 不在 `PATH` 里，安装器会提示用户把它加入 shell 配置。
+默认会按当前 shell 写入这些文件之一：zsh 写入 `~/.zshrc` 和 `~/.zprofile`，bash 写入 `~/.bashrc` 和 `~/.bash_profile`，其他 shell 写入 `~/.profile`。如果不想让安装器修改 shell 配置，可以这样安装：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Holycrabeth/jianpai/main/scripts/install.sh | JIANPAI_UPDATE_SHELL=0 bash
+```
+
+这种情况下需要手动把 `~/.local/bin` 加入 `PATH`。
 
 ## 发布准备
 
@@ -80,6 +87,7 @@ bash scripts/install.sh
 ## 注意
 
 - `简派` 是中文命令名，macOS / Linux 通常可用；同时保留 `jianpai`，方便英文环境和脚本使用。
+- 安装后如果当前终端还识别不到 `简派`，请新开一个终端窗口，或先运行 `export PATH="$HOME/.local/bin:$PATH"`。
 - 安装脚本会运行 `npm ci --ignore-scripts`，不运行依赖安装脚本，降低安装阶段的不可控行为。
 - 当前开源许可：MIT。
 - 真正发布前需要确认域名托管位置和更新策略。
