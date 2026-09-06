@@ -14,8 +14,11 @@
 - [x] 本次执行 `npm run check`：检查通过。
 - [x] 本机临时目录模拟安装通过：从本地 tar.gz 安装后，`简派 --version` / `jianpai --version` 均输出 `0.85.0`。
 - [x] macmini 临时目录隔离安装通过：SSH 环境下自动补 Homebrew Node 路径，`简派 --version` / `jianpai --version` 均输出 `0.85.0`。
-- [ ] 正式发布前确认开源许可、公开仓库 / 托管方式、nodeble 域名路径和更新策略。
-- [ ] 将 `scripts/install.sh` 与 `dist/jianpai-latest.tar.gz` 上传到 `https://nodeble.com/jianpai/` 后，再用真实 URL 做端到端下载验证。
+- [x] 按用户确认采用 MIT 开源许可，新增 `LICENSE`，并在 `package.json` / README 标注。
+- [x] 创建公开 GitHub 仓库：`https://github.com/Holycrabeth/jianpai`。
+- [x] 发布 GitHub Release `v0.1.0`，上传 `dist/jianpai-latest.tar.gz`。
+- [x] 真实公开 URL 端到端验证通过：本机和 macmini 均可通过 `curl -fsSL https://raw.githubusercontent.com/Holycrabeth/jianpai/main/scripts/install.sh | bash` 隔离安装，`简派 --version` / `jianpai --version` 输出 `0.85.0`。
+- [ ] `nodeble.com` 当前解析到 `213.249.67.10`，但 HTTP/HTTPS/SSH 探测不可用；后续恢复域名或配置跳转到 GitHub 安装脚本。
 
 ### 上次：命令括号说明与交接整理
 

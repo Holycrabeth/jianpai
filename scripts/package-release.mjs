@@ -23,4 +23,5 @@ const args = [
 const result = spawnSync('tar', args, { stdio: 'inherit' });
 if (result.status !== 0) process.exit(result.status ?? 1);
 console.log(`已生成：${outFile}`);
-console.log('可上传为：https://nodeble.com/jianpai/jianpai-latest.tar.gz');
+console.log('可上传到 GitHub Release，下载地址将是：');
+console.log('https://github.com/Holycrabeth/jianpai/releases/latest/download/jianpai-latest.tar.gz');
