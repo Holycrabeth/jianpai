@@ -31,6 +31,8 @@
 - [x] 安装器新增 Telegram 可选配置询问：提示“为了确保您知道模型是否完工，建议添加 Telegram 通知机器人...”，用户选择后输入自己的 Chat ID / Bot Token；自动保存到用户本机 `~/.jianpai/agent/telegram.env`，可用 `JIANPAI_CONFIGURE_TELEGRAM=0` 跳过。
 - [x] 本次执行 `bash -n scripts/install.sh && npm test && npm run package:release`：19 项测试通过并重新生成 `dist/jianpai-latest.tar.gz`。
 - [x] 修正发布打包规则，排除本地临时验证目录 `.local/`；重新检查本地发布包：无 `.local/`、无个人 Telegram 凭据、包含 Telegram 可选配置询问。
+- [x] 已刷新 `v0.1.1` tag 和 GitHub Release 附件；通过 GitHub CLI 下载校验：版本 `0.1.1`、无 `.local/`、无个人 Telegram 凭据、包含 Telegram 可选配置询问。
+- [x] 本机与 mac mini 已重新安装刷新后的通用 `0.1.1` 包；两台机器的本地 Telegram 配置文件仍在且权限为 `600`。
 - [x] 退出当前简派后，重新打包发布并用公开安装命令验证新安装器会自动配置 PATH。
 - [x] 按用户要求新增 Telegram 完成通知初版：内置 `extensions/telegram-done.ts`，启动器自动以 `--extension` 加载；配置 `JIANPAI_TELEGRAM_BOT_TOKEN` 和 `JIANPAI_TELEGRAM_CHAT_ID` 后，在 `agent_settled` 发送“简派干完了”。
 - [x] 新增 `docs/telegram.md`，说明配置、关闭、隐私边界和为什么使用 `agent_settled`。
