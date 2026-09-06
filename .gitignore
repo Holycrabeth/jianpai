@@ -1,0 +1,14 @@
+node_modules/
+build/
+.local/
+dist/
+coverage/
+*.tsbuildinfo
+.DS_Store
+.env
+.env.*
+!.env.example
+*.log
+.pi/sessions/
+.pi/npm/
+.pi/git/
